@@ -14,7 +14,7 @@ This project contains example Playwright tests that test various features of the
 
 ### Prerequisites
 
-- Node.js (version 14 or higher)
+- Node.js (version 18 or higher)
 - npm or yarn
 
 ### Installation
@@ -68,21 +68,29 @@ npm run test:report
 
 ```
 I-Learn-PlayWright-Today/
+├── .github/
+│   └── workflows/
+│       └── playwright.yml       # GitHub Actions CI/CD workflow
 ├── tests/
-│   ├── homepage.spec.js       # Tests for Playwright homepage
-│   ├── documentation.spec.js  # Tests for documentation pages
-│   └── api-docs.spec.js       # Tests for API documentation
-├── playwright.config.js        # Playwright configuration
-├── package.json               # Project dependencies and scripts
-└── README.md                  # This file
+│   ├── homepage.spec.js         # Tests for Playwright homepage
+│   ├── documentation.spec.js    # Tests for documentation pages
+│   ├── api-docs.spec.js         # Tests for API documentation
+│   ├── examples.spec.js         # Advanced Playwright examples
+│   ├── TEMPLATE.spec.js         # Template for creating new tests
+│   └── README.md                # Test documentation
+├── .gitignore                   # Git ignore patterns
+├── CONTRIBUTING.md              # Contribution guidelines
+├── playwright.config.js         # Playwright configuration
+├── package.json                 # Project dependencies and scripts
+└── README.md                    # This file
 ```
 
 ## 🧰 Configuration
 
 The project is configured to run tests on:
-- Chromium
-- Firefox
-- WebKit
+- **Chromium** (enabled by default)
+- Firefox (commented out, can be enabled in `playwright.config.js`)
+- WebKit (commented out, can be enabled in `playwright.config.js`)
 
 Configuration can be modified in `playwright.config.js`.
 

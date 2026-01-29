@@ -88,15 +88,20 @@ test.describe('Your Feature Name', () => {
   test('should take screenshots', async ({ page }) => {
     await page.goto('/');
     
+    // Use unique filenames with timestamp to avoid conflicts in parallel execution
+    const timestamp = Date.now();
+    
     // Full page screenshot
     await page.screenshot({ 
-      path: 'test-results/my-screenshot.png',
+      path: `test-results/my-screenshot-${timestamp}.png`,
       fullPage: true 
     });
     
     // Element screenshot
     const element = page.locator('#specific-element');
-    await element.screenshot({ path: 'test-results/element-screenshot.png' });
+    await element.screenshot({ 
+      path: `test-results/element-screenshot-${timestamp}.png` 
+    });
   });
 
   // Test that should be skipped
@@ -106,9 +111,11 @@ test.describe('Your Feature Name', () => {
   });
 
   // Test that only runs when focused (use for debugging)
-  test.only.skip('focused test for debugging', async ({ page }) => {
-    // Remove .skip and this will be the only test that runs
+  // Remove the .only to run all tests, or use it alone for focused execution
+  test('focused test for debugging', async ({ page }) => {
+    // When you add .only to this test, it will be the only test that runs
     // Useful when developing/debugging a specific test
+    // Example: test.only('focused test for debugging', async ({ page }) => {
     await page.goto('/');
   });
 });

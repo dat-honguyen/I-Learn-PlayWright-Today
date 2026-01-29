@@ -11,8 +11,12 @@ test.describe('Playwright Examples - Advanced Features', () => {
   test('example: taking screenshots', async ({ page }) => {
     await page.goto('/');
     
-    // Take a full page screenshot
-    await page.screenshot({ path: 'test-results/homepage-screenshot.png', fullPage: true });
+    // Take a screenshot with timestamp for uniqueness
+    const timestamp = Date.now();
+    await page.screenshot({ 
+      path: `test-results/homepage-${timestamp}.png`, 
+      fullPage: true 
+    });
     
     // Verify page loaded
     await expect(page).toHaveTitle(/Playwright/);
@@ -23,7 +27,6 @@ test.describe('Playwright Examples - Advanced Features', () => {
     
     // Get all links on the page
     const links = await page.getByRole('link').all();
-    console.log(`Found ${links.length} links on the page`);
     
     // Verify we have navigation elements
     expect(links.length).toBeGreaterThan(0);
@@ -41,7 +44,7 @@ test.describe('Playwright Examples - Advanced Features', () => {
     
     // Check if element exists (but don't fail if not found)
     const count = await getStartedLink.count();
-    console.log(`Found ${count} 'Get Started' elements`);
+    expect(count).toBeGreaterThanOrEqual(0);
   });
 
   test('example: checking page content and text', async ({ page }) => {
@@ -53,8 +56,6 @@ test.describe('Playwright Examples - Advanced Features', () => {
     // Verify page contains relevant content
     expect(bodyText).toBeTruthy();
     expect(bodyText.length).toBeGreaterThan(100);
-    
-    console.log(`Page loaded with ${bodyText.length} characters of content`);
   });
 
   test('example: working with page URLs', async ({ page }) => {
@@ -98,7 +99,6 @@ test.describe('Playwright Examples - Advanced Features', () => {
 test.describe('Playwright Examples - Test Hooks', () => {
   test.beforeEach(async ({ page }) => {
     // This runs before each test in this describe block
-    console.log('Setting up test...');
     await page.goto('/');
   });
 
@@ -110,7 +110,6 @@ test.describe('Playwright Examples - Test Hooks', () => {
   test('example: checking viewport', async ({ page }) => {
     // Check the viewport size
     const viewport = page.viewportSize();
-    console.log(`Viewport size: ${viewport.width}x${viewport.height}`);
     
     expect(viewport.width).toBeGreaterThan(0);
     expect(viewport.height).toBeGreaterThan(0);

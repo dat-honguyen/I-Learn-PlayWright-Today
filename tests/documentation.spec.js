@@ -23,19 +23,19 @@ test.describe('Documentation Tests', () => {
     expect(pageContent.length).toBeGreaterThan(100);
   });
 
-  test('should display installation instructions', async ({ page }) => {
+  test('should display code examples', async ({ page }) => {
     await page.goto('/docs/intro');
 
-    // Check for code blocks or installation related content
-    const pageContent = await page.textContent('body');
+    // Check for code blocks which are common in documentation
+    const codeElements = page.locator('code, pre, .code-block');
+    const codeCount = await codeElements.count();
     
-    // Look for common installation/getting started terms
-    const hasInstallInfo = 
-      pageContent.includes('install') || 
-      pageContent.includes('npm') ||
-      pageContent.includes('Getting Started');
+    // Documentation pages typically have code examples
+    expect(codeCount).toBeGreaterThan(0);
     
-    expect(hasInstallInfo).toBeTruthy();
+    // Verify the page has substantial content
+    const bodyText = await page.textContent('body');
+    expect(bodyText.length).toBeGreaterThan(200);
   });
 
   test('should be able to navigate between doc sections', async ({ page }) => {

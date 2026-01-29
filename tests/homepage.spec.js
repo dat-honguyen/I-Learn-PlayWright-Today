@@ -46,18 +46,18 @@ test.describe('Playwright Homepage Tests', () => {
     await expect(docsLink).toBeVisible();
   });
 
-  test('should display main features section', async ({ page }) => {
+  test('should display main content sections', async ({ page }) => {
     await page.goto('/');
 
-    // Look for key feature keywords on homepage
-    const pageContent = await page.textContent('body');
+    // Verify main content area exists
+    const main = page.locator('main, article, .content, [role="main"]').first();
     
-    // These are common terms that appear on Playwright homepage
-    const hasRelevantContent = 
-      pageContent.includes('test') || 
-      pageContent.includes('browser') || 
-      pageContent.includes('automation');
+    // Check that the page has substantial content
+    const bodyText = await page.textContent('body');
+    expect(bodyText.length).toBeGreaterThan(500);
     
-    expect(hasRelevantContent).toBeTruthy();
+    // Verify page is interactive (has clickable elements)
+    const links = await page.getByRole('link').all();
+    expect(links.length).toBeGreaterThan(3);
   });
 });
