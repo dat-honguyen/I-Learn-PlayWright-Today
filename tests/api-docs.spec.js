@@ -55,5 +55,4 @@ test.describe('Browser Support Information', () => {
     const bodyText = await page.textContent('body');
     expect(bodyText.length).toBeGreaterThan(200);
   });
-  });
 });
